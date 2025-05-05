@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Images\posts\1.png" />
+    <Content Include="Images\posts\2.png" />
+    <Content Include="Images\posts\3.png" />
+    <Content Include="Images\posts\4.png" />
+    <Content Include="Images\posts\5.png" />
+    <Content Include="Images\posts\6.png" />
+    <Content Include="Images\posts\7.png" />
+    <Content Include="Images\users\1.png" />
+    <Content Include="Images\users\10.png" />
+    <Content Include="Images\users\11.png" />
+    <Content Include="Images\users\12.png" />
+    <Content Include="Images\users\13.png" />
+    <Content Include="Images\users\14.png" />
+    <Content Include="Images\users\2.png" />
+    <Content Include="Images\users\3.png" />
+    <Content Include="Images\users\4.png" />
+    <Content Include="Images\users\5.png" />
+    <Content Include="Images\users\6.png" />
+    <Content Include="Images\users\7.png" />
+    <Content Include="Images\users\8.png" />
+    <Content Include="Images\users\9.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+    <Folder Include="wwwroot\Images\posts\" />
+    <Folder Include="wwwroot\Images\users\" />
+  </ItemGroup>
+
+</Project>

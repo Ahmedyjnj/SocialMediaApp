@@ -1,0 +1,119 @@
+﻿@model IEnumerable<SocialMediaApp.Models.Post>
+
+@{
+    ViewData["Title"] = "Posts";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container">
+    <div class="row">
+
+        <!-- Sidebar with users on the left -->
+        <div class="col-md-3">
+            <div class="card mb-4 shadow-sm rounded">
+                <div class="card-header bg-primary text-white">
+                    <h5>Users</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        @foreach (var user in Model.Select(post => post.User).Distinct())
+                        {
+                            <a href="@Url.Action("ShowPage", "User", new { id = user.UserId })" class="text-dark">
+                                <li class="d-flex align-items-center mb-3">
+                                    @if (!string.IsNullOrEmpty(user.ProfilePhoto))
+                                    {
+                                        <img src="@user.ProfilePhoto"  class="rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-person-circle text-primary" style="font-size: 30px; margin-right: 10px;"></i>
+                                    }
+
+                                    @user.UserName
+
+                                </li>
+                            </a>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Posts section -->
+        <div class="col-md-9">
+            <h2 class="text-primary mb-4">All Posts</h2>
+
+            <!-- Create Post Box -->
+            <div class="card mb-4 shadow-sm rounded">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-person-circle fs-2 text-primary me-3"></i>
+                    <div class="w-100">
+                        <form asp-action="Create" method="get">
+                            <button type="submit" class="btn btn-outline-primary w-100 py-2 fw-semibold">
+                                <i class="bi bi-pencil-square"></i> What's on your mind?
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Displaying Posts -->
+            @foreach (var item in Model)
+            {
+                <div class="card mb-4 shadow-sm rounded">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+
+                            @if (!string.IsNullOrEmpty(item.User.ProfilePhoto))
+                            {
+                                <img src="@item.User.ProfilePhoto" class="rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">
+                            }
+                            else
+                            {
+                                <i class="bi bi-person-circle text-primary fs-4 me-2"></i>
+                            }
+                            
+                            <strong>@item.User.UserName</strong>
+                        </div>
+                        <small class="text-muted">
+                            <i class="bi bi-clock"></i>
+                            @item.CreatedAt?.ToString("yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)
+                        </small>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                        <div class="text-center">
+                            <img src="@item.ImagePath"
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-width: 500px; max-height: 300px; object-fit: cover;"
+                                 alt="Post Image" />
+                        </div>
+                    }
+
+                    <div class="card-body">
+                        <p class="card-text">@item.Content</p>
+                    </div>
+
+                    <div class="card-footer bg-light d-flex justify-content-end">
+                        <a asp-action="Edit" asp-route-id="@item.PostId" class="btn btn-sm btn-outline-primary me-2">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                       
+                        <a asp-action="Delete" asp-route-id="@item.PostId" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

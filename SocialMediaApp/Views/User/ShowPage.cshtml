@@ -1,0 +1,80 @@
+﻿@model SocialMediaApp.Models.User
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg rounded">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Profile</h3>
+                </div>
+                <div class="card-body text-center">
+
+                    <!-- Profile Photo -->
+                    @if (!string.IsNullOrEmpty(Model.ProfilePhoto))
+                    {
+                        <img src="@Model.ProfilePhoto" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile Picture" />
+                    }
+                    else
+                    {
+                        <i class="bi bi-person-circle text-secondary" style="font-size: 150px;"></i>
+                    }
+
+                    <!-- Username -->
+                    <h4 class="text-primary">@Model.UserName</h4>
+                    <p class="text-muted">@Model.Email</p>
+
+                    <hr />
+
+                    <!-- User Info -->
+                    <div class="row text-start">
+                        <div class="col-sm-4 fw-semibold">Birth Date:</div>
+                        <div class="col-sm-8 mb-2">@Model.BirthDate?.ToString("yyyy-MM-dd")</div>
+
+                        <div class="col-sm-4 fw-semibold">Role:</div>
+                        <div class="col-sm-8 mb-2">@Model.Role</div>
+
+                        <div class="col-sm-4 fw-semibold">Password:</div>
+                        <div class="col-sm-8 mb-2">@Model.Password</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                  
+                    <a asp-action="Index" asp-controller="Post" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Posts != null && Model.Posts.Any())
+{
+    <div class="mt-5">
+        <h4 class="text-center text-primary">Posts by @Model.UserName</h4>
+        @foreach (var post in Model.Posts.OrderByDescending(p => p.CreatedAt))
+        {
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header d-flex justify-content-between">
+                    <span><i class="bi bi-calendar"></i> @post.CreatedAt?.ToString("yyyy-MM-dd HH:mm")</span>
+                </div>
+                @if (!string.IsNullOrEmpty(post.ImagePath))
+                {
+                    <img src="@post.ImagePath" class="card-img-top" style="max-height: 400px; object-fit: cover;" />
+                }
+                <div class="card-body">
+                    <p>@post.Content</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-center text-muted mt-4">No posts yet.</p>
+}
+
